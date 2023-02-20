@@ -10,22 +10,16 @@ function App() {
   
   const API_KEY = "AQ8q8j3ihr4OWpQ6Bj9CXrF14AaV9SdY";
 
-  function params() {
-    return new URLSearchParams({
-      access_key: "WNiS9hiaDj828hcgupjd14r0Xees78WR",
-      base: "USD",
-      
-    })
+  var myHeaders = new Headers();
+  myHeaders.append("apikey", API_KEY);
+  var requestOptions = {
+    method: 'GET',
+    headers: myHeaders
   }
 
   useEffect(() => {
 
-    // Axios.get(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.min.json`)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-
-    fetch(`${BASE_URL}?${params()}`)
+    fetch("https://api.apilayer.com/exchangerates_data/latest?&base=USD", requestOptions)
       .then(res => res.json())
       .then(data => console.log(data))
 
