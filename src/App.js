@@ -1,5 +1,6 @@
 import './App.css';
-import CurrencyRow from './CurrencyRow';
+import CurrencyRowFrom from './CurrencyRowFrom';
+import CurrencyRowTo from './CurrencyRowTo';
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -10,18 +11,9 @@ function App() {
   const [currencySymbols, setCurrencySymbols] = useState();
   const [fromCurrency, setFromCurrency] = useState()
   const [toCurrency, setToCurrency] = useState();
-  const [exchangeRate, setExchangeRate] = useState();
   const [amount, setAmount] = useState(1);
-  const [amountIsFromCurrency, setAmountIsFromCurrency] = useState(true);
+  const [outPut, setOutput] = useState(0)
 
-  let toAmount, fromAmount;
-  if (amountIsFromCurrency) {
-    fromAmount = amount;
-    toAmount = amount * exchangeRate;
-  } else {
-    fromAmount = amount / exchangeRate;
-    toAmount = amount;
-  }
 
   const API_KEY = "WNiS9hiaDj828hcgupjd14r0Xees78WR";
   var myHeaders = new Headers();
@@ -33,7 +25,7 @@ function App() {
 
   useEffect(() => {
 
-      // get rates
+      // get rate options for dropdowns
     fetch("https://api.apilayer.com/exchangerates_data/latest?&base=USD", requestOptions)
       .then(res => res.json())
       .then(data => {
@@ -41,29 +33,24 @@ function App() {
         setCurrencyOptions([data.base, ...Object.keys(data.rates)])
         setFromCurrency(data.base)
         setToCurrency(baseCurrency)
-        setExchangeRate(data.rates[baseCurrency])
       })
 
 
       // get symbols
-    fetch("https://api.apilayer.com/exchangerates_data/symbols", requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        setCurrencySymbols(result.symbols)
-      })
+    // fetch("https://api.apilayer.com/exchangerates_data/symbols", requestOptions)
+    //   .then(response => response.json())
+    //   .then(result => {
+    //     setCurrencySymbols(result.symbols)
+    //   })
   
   }, [])
-  
-  useEffect(() => {
-    if (fromCurrency != null && toCurrency != null) {
-      fetch(`https://api.apilayer.com/exchangerates_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amount}`, requestOptions)
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-        })
-    }
-  }, [fromCurrency, toCurrency])
 
+
+  // call the convert function whenever user changes the currency
+  useEffect(() => {
+    convert();
+  }, [fromCurrency, toCurrency])
+  
   function changeFromCurrency (e) {
     setFromCurrency(e.target.value)
   }
@@ -74,24 +61,36 @@ function App() {
 
   function handleChangeTheFromAmount (e) {
     setAmount(e.target.value);
-    setAmountIsFromCurrency(true);
   }
 
-  function handleChangeTheToAmount (e) {
-    setAmount(e.target.value);
-    setAmountIsFromCurrency(false);
+  // convert function using API call
+  function convert () {
+    if (fromCurrency != null && toCurrency != null) {
+      fetch(`https://api.apilayer.com/exchangerates_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amount}`, requestOptions)
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          setOutput(data.result);
+        })
+    }
   }
 
+  // swap the currencies
+  function swap () {
+    var temp = fromCurrency;
+    setFromCurrency(toCurrency);
+    setToCurrency(temp);
+  }
 
   return (
     <div className="App">
       <header className="App-header">
 
-        <h1>Currency Converter, by Don Anh Nguyen</h1>
+        <h1>Currency Converter</h1>
 
         <h1>from</h1>
-        <CurrencyRow 
-          amount={fromAmount} 
+        <CurrencyRowFrom 
+          amount={amount} 
           onChangeCurrency={changeFromCurrency} 
           selectedCurrency={fromCurrency} 
           currencyOptions={currencyOptions} 
@@ -99,18 +98,28 @@ function App() {
           onChangeAmount={handleChangeTheFromAmount}
           />
           
-
         <div>=</div>
 
         <h1>to</h1>
-        <CurrencyRow 
-          amount={toAmount} 
+        <CurrencyRowTo 
           onChangeCurrency={changeToCurrency} 
           selectedCurrency={toCurrency} 
           currencyOptions={currencyOptions} 
           currencySymbols={currencySymbols}
-          onChangeAmount={handleChangeTheToAmount}
           />
+
+      {/* output */}
+
+          <div>
+            <button onClick={convert}>Convert</button>
+            <h1>{amount} {fromCurrency} = {outPut.toFixed(2)} {toCurrency}</h1>
+          </div>
+
+      {/* swap button */}
+
+          <div>
+            <button onClick={swap}>Swap</button>
+          </div>
 
 
       </header>
