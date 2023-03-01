@@ -10,7 +10,7 @@ export default function CurrencyRowTo (props) {
     <div>
             <select value={selectedCurrency} onChange={onChangeCurrency}>
               {currencyOptions.map((option, index) => {
-                return <option key={option + index} value={option}>{option}</option>
+                return <option key={option + index} value={option}>{option} {`${currencySymbols[option]}`}</option>
               })}
             </select>
     </div>

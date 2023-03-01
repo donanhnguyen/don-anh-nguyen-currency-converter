@@ -23,10 +23,12 @@ function App() {
     headers: myHeaders
   }
 
+  const currenciesLimit = "GBP,JPY,EUR,AUD,CAD,CHF,HKD,SGD,SEK,NOK,NZD,INR,MXN,TWD,ZAR,BRL,DKK,THB,CZK,TRY,RUB,COP,SAR,VND,KRW";
+
   useEffect(() => {
 
       // get rate options for dropdowns
-    fetch("https://api.apilayer.com/exchangerates_data/latest?&base=USD", requestOptions)
+    fetch(`https://api.apilayer.com/exchangerates_data/latest?symbols=${currenciesLimit}&base=USD`, requestOptions)
       .then(res => res.json())
       .then(data => {
         const baseCurrency = Object.keys(data.rates)[0];
@@ -37,11 +39,11 @@ function App() {
 
 
       // get symbols
-    // fetch("https://api.apilayer.com/exchangerates_data/symbols", requestOptions)
-    //   .then(response => response.json())
-    //   .then(result => {
-    //     setCurrencySymbols(result.symbols)
-    //   })
+    fetch("https://api.apilayer.com/exchangerates_data/symbols", requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        setCurrencySymbols(data.symbols)
+      })
   
   }, [])
 
@@ -69,7 +71,7 @@ function App() {
       fetch(`https://api.apilayer.com/exchangerates_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${amount}`, requestOptions)
         .then(res => res.json())
         .then(data => {
-          console.log(data);
+          // console.log(data);
           setOutput(data.result);
         })
     }
@@ -86,9 +88,10 @@ function App() {
     <div className="App">
       <header className="App-header">
 
-        <h1>Currency Converter</h1>
+        <h1 className='breathing title'>Currency Converter</h1>
 
-        <h1>from</h1>
+    <div className='main-body'>
+      <h1>from</h1>
         <CurrencyRowFrom 
           amount={amount} 
           onChangeCurrency={changeFromCurrency} 
@@ -98,7 +101,7 @@ function App() {
           onChangeAmount={handleChangeTheFromAmount}
           />
           
-        <div>=</div>
+     
 
         <h1>to</h1>
         <CurrencyRowTo 
@@ -120,6 +123,8 @@ function App() {
           <div>
             <button onClick={swap}>Swap</button>
           </div>
+    </div>
+        
 
 
       </header>

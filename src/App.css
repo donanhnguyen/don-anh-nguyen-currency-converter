@@ -15,6 +15,9 @@
 
 .App-header {
   background-color: #282c34;
+  background-image: url("world.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -40,14 +43,13 @@
 input[type='number'] {
   min-width: 200px;
   min-height: 40px;
-  font-size: 30px;
+  font-size: 25px;
   border: 2px solid rgb(255, 255, 255);
   border-radius: 40px;
-  margin: 5px;
 }
 button{
-  width: 200px;
-  height: 60px;
+  min-width: 100px;
+  min-height: 40px;
   font-weight: bold;
   font-size: 100%;
   border: 2px solid rgb(255, 255, 255);
@@ -60,10 +62,82 @@ button:hover {
   background-color: #61dafb;
 }
 select {
-  min-width: 200px;
+  min-width: 100px;
   min-height: 40px;
-  font-size: 30px;
+  font-size: 25px;
   border: 2px solid rgb(255, 255, 255);
   border-radius: 40px;
-  margin: 5px;
 }
+
+.main-body {
+  border: 1px solid black;
+  background: linear-gradient(rgb(0, 0, 255), rgb(0, 35, 99));
+  padding: 50px;
+  border-radius: 30px;
+}
+h1 {
+  font-size: 3rem;
+}
+.title {
+  background: linear-gradient(rgb(0, 113, 166), rgba(0, 140, 255, 0.708));
+  border-radius: 30px;
+}
+
+
+/* breathing */
+
+.breathing {
+  -webkit-animation: breathing 2s ease-out infinite normal;
+    animation: breathing 2s ease-out infinite normal;
+    font-size: 70px;
+}
+
+
+    @-webkit-keyframes breathing {
+      0% {
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+      }
+    
+      25% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+      }
+    
+      60% {
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+      }
+    
+      100% {
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+      }
+    }
+    
+    @keyframes breathing {
+      0% {
+        -webkit-transform: scale(0.9);
+        -ms-transform: scale(0.9);
+        transform: scale(0.9);
+      }
+    
+      25% {
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+      }
+    
+      60% {
+        -webkit-transform: scale(0.9);
+        -ms-transform: scale(0.9);
+        transform: scale(0.9);
+      }
+    
+      100% {
+        -webkit-transform: scale(0.9);
+        -ms-transform: scale(0.9);
+        transform: scale(0.9);
+      }
+    }
+    
