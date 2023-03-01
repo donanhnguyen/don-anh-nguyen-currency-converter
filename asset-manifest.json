@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/don-anh-nguyen-currency-converter/static/css/main.921d0777.css",
+    "main.js": "/don-anh-nguyen-currency-converter/static/js/main.3b3d0514.js",
+    "static/js/787.d7dc9778.chunk.js": "/don-anh-nguyen-currency-converter/static/js/787.d7dc9778.chunk.js",
+    "static/media/world.jpg": "/don-anh-nguyen-currency-converter/static/media/world.945c903bccb4bd4a3bb7.jpg",
+    "index.html": "/don-anh-nguyen-currency-converter/index.html",
+    "main.921d0777.css.map": "/don-anh-nguyen-currency-converter/static/css/main.921d0777.css.map",
+    "main.3b3d0514.js.map": "/don-anh-nguyen-currency-converter/static/js/main.3b3d0514.js.map",
+    "787.d7dc9778.chunk.js.map": "/don-anh-nguyen-currency-converter/static/js/787.d7dc9778.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.921d0777.css",
+    "static/js/main.3b3d0514.js"
+  ]
+}
